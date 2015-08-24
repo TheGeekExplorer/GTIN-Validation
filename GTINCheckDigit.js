@@ -17,8 +17,7 @@ function CheckDigit (gtin) {
     
     // Calculate "Sum" of barcode digits
     for (i=modifier; i < 17; i++) {
-        tmpMath = CheckDigitArray[i] * gtinMaths[i];
-        tmpCheckSum += tmpMath;
+        tmpCheckSum += (CheckDigitArray[i] * gtinMaths[i]);
     }
         
     // Difference from Rounded-Up-To-Nearest-10 - Fianl Check Digit Calculation
