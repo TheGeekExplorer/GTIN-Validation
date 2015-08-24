@@ -2,7 +2,7 @@
 function CheckDigit (gtin) {
     var CheckDigitArray = [];
     var gtinMaths = [3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3];
-    var modifier = 17 - (gtinLength - 1); // Gets the position to place first digit in array
+    var modifier = 17 - (gtin.length - 1); // Gets the position to place first digit in array
     var gtinCheckDigit = gtin.slice(-1);  // Get provided check digit
     var BarcodeArray = gtin.split("");    // Split barcode at each digit into array
     var gtinLength = gtin.length;
@@ -21,17 +21,10 @@ function CheckDigit (gtin) {
         tmpCheckSum += tmpMath;
     }
         
-    // Difference from nearest 10 - Fianl Check Digit Calculation
-    if (tmpCheckSum < (Math.round(tmpCheckSum / 10) * 10)) {
-        tmpCheckDigit = (Math.round(tmpCheckSum / 10) * 10) - parseInt(tmpCheckSum);
-    } else {
-        tmpCheckDigit = parseInt(tmpCheckSum) - (Math.round(tmpCheckSum / 10) * 10);
-    }
+    // Difference from Rounded-Up-To-Nearest-10 - Fianl Check Digit Calculation
+    tmpCheckDigit = (Math.ceil(tmpCheckSum / 10) * 10) - parseInt(tmpCheckSum);
     
     // Check if last digit is same as calculated check digit
     if (gtin.slice(-1) == tmpCheckDigit)
         return true;
-        
-    // else return false
-    return false;
 }
