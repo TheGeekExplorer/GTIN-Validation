@@ -1,9 +1,10 @@
+// Check length of barcode for validity
 function CheckDigit (gtin) {
     var CheckDigitArray = [];
     var gtinMaths = [3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3];
     var modifier = 17 - (gtinLength - 1); // Gets the position to place first digit in array
     var gtinCheckDigit = gtin.slice(-1);  // Get provided check digit
-    var BarcodeArray = gtin.split("");  // Split barcode at each digit into array
+    var BarcodeArray = gtin.split("");    // Split barcode at each digit into array
     var gtinLength = gtin.length;
     var tmpCheckDigit = 0;
     var tmpCheckSum = 0;
