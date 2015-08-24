@@ -1,2 +1,2 @@
-# GTIN-Check-Digit
-Checks the validity of the check digit in 8, 12, 13, and 14 GTINs
+# Check validity of GTINs via the Check Digit
+This function checks the validity of GTIN-8, GTIN-12, GTIN-13, and GTIN-14 using the chec digit.
