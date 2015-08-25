@@ -8,7 +8,7 @@ class GTIN {
     public static function CheckDigit ($gtin) {
     
         # Check that GTIN provided is a certain length
-        if (!CheckGTIN($gtin))
+        if (!self::CheckGTIN($gtin))
             return false;
         
         # Define fixed variables
