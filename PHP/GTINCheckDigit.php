@@ -1,17 +1,16 @@
 <?php
-
 namespace gtin;
 
 class GTIN {
 
-	# Check length of barcode for validity
+    # Check length of barcode for validity
     public static function CheckGTIN ($gtin) {
     
         # Check that GTIN provided is a certain length
         if (!CheckBasics($gtin))
             return false;
         
-		# Define fixed variables
+        # Define fixed variables
         $CheckDigitArray = [];
         $gtinMaths = [3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3];
         $modifier = 17 - (strlen($gtin) - 1);  // Gets the position to place first digit in array
@@ -38,7 +37,7 @@ class GTIN {
         # Check if last digit is same as calculated check digit
         if ($gtinCheckDigit == $tmpCheckDigit)
             return true;
-		return false;
+        return false;
     }
     
     # Checks the length of the GTIN
@@ -55,3 +54,4 @@ class GTIN {
         # Is valid, return true
         return true;
     }
+}
