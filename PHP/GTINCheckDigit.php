@@ -5,11 +5,11 @@ namespace gtin;
 class GTIN {
 
     // Check length of barcode for validity
-    public function CheckDigit ($gtin) {
+    public static function CheckDigit ($gtin) {
         $CheckDigitArray = [];
         $gtinMaths[3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3];
         $modifier = 17 - strlen($gtin - 1);  // Gets the position to place first digit in array
-        $gtinCheckDigit = substr($gtin, -1);  // Get provided check digit
+        $gtinCheckDigit = substr($gtin, -1); // Get provided check digit
         $BarcodeArray = explode($gtin, "");  // Split barcode at each digit into array
         $gtinLength = strlen($gtin);
         $tmpCheckDigit = 0;
