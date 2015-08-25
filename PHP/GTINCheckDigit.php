@@ -4,19 +4,19 @@ namespace gtin;
 
 class GTIN {
 
-    # Check length of barcode for validity
-    public static function CheckDigit ($gtin) {
+	# Check length of barcode for validity
+    public static function CheckGTIN ($gtin) {
     
         # Check that GTIN provided is a certain length
-        if (!self::CheckGTIN($gtin))
+        if (!CheckBasics($gtin))
             return false;
         
-        # Define fixed variables
+		# Define fixed variables
         $CheckDigitArray = [];
-        $gtinMaths[3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3];
-        $modifier = 17 - strlen($gtin - 1);  // Gets the position to place first digit in array
+        $gtinMaths = [3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3];
+        $modifier = 17 - (strlen($gtin) - 1);  // Gets the position to place first digit in array
         $gtinCheckDigit = substr($gtin, -1); // Get provided check digit
-        $BarcodeArray = explode($gtin, "");  // Split barcode at each digit into array
+        $BarcodeArray = str_split($gtin);  // Split barcode at each digit into array
         $gtinLength = strlen($gtin);
         $tmpCheckDigit = 0;
         $tmpCheckSum = 0;
@@ -33,15 +33,16 @@ class GTIN {
         }
         
         # Difference from Rounded-Up-To-Nearest-10 - Fianl Check Digit Calculation
-        $tmpCheckDigit = (ceil($tmpCheckSum / 10) * 10) - int($tmpCheckSum);
+        $tmpCheckDigit = (ceil($tmpCheckSum / 10) * 10) - $tmpCheckSum;
         
         # Check if last digit is same as calculated check digit
         if ($gtinCheckDigit == $tmpCheckDigit)
             return true;
+		return false;
     }
     
     # Checks the length of the GTIN
-    private function CheckGTIN ($gtin) {
+    public static function CheckBasics ($gtin) {
         # Check length is ok
         if (strlen($gtin) < 8 || strlen($gtin) > 14)
             return false;
@@ -54,4 +55,3 @@ class GTIN {
         # Is valid, return true
         return true;
     }
-}
