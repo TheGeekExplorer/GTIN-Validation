@@ -4,8 +4,14 @@ namespace gtin;
 
 class GTIN {
 
-    // Check length of barcode for validity
+    # Check length of barcode for validity
     public static function CheckDigit ($gtin) {
+    
+        # Check that GTIN provided is a certain length
+        if (!CheckGTIN($gtin))
+            return false;
+        
+        # Define fixed variables
         $CheckDigitArray = [];
         $gtinMaths[3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3];
         $modifier = 17 - strlen($gtin - 1);  // Gets the position to place first digit in array
@@ -16,21 +22,36 @@ class GTIN {
         $tmpCheckSum = 0;
         $tmpMath = 0;
         
-        // Run through and put digits into multiplication table
+        # Run through and put digits into multiplication table
         for ($i=0; $i < ($gtinLength - 1); $i++) {
             $CheckDigitArray[$modifier + $i] = $BarcodeArray[$i];  // Add barcode digits to Multiplication Table
         }
         
-        // Calculate "Sum" of barcode digits
+        # Calculate "Sum" of barcode digits
         for ($i=$modifier; $i < 17; $i++) {
             $tmpCheckSum += ($CheckDigitArray[$i] * $gtinMaths[$i]);
         }
-            
-        // Difference from Rounded-Up-To-Nearest-10 - Fianl Check Digit Calculation
+        
+        # Difference from Rounded-Up-To-Nearest-10 - Fianl Check Digit Calculation
         $tmpCheckDigit = (ceil($tmpCheckSum / 10) * 10) - int($tmpCheckSum);
         
-        // Check if last digit is same as calculated check digit
+        # Check if last digit is same as calculated check digit
         if ($gtinCheckDigit == $tmpCheckDigit)
             return true;
+    }
+    
+    # Checks the length of the GTIN
+    private function CheckGTIN ($gtin) {
+        # Check length is ok
+        if (strlen($gtin) < 8 || strlen($gtin) > 14)
+            return false;
+        
+        # Check whether is a number
+        preg_match("/\d+/", $gtin, $m, PREG_OFFSET_CAPTURE, 0);
+        if (empty($m))
+            return false;
+        
+        # Is valid, return true
+        return true;
     }
 }
