@@ -1,5 +1,11 @@
 // Check length of barcode for validity
 function CheckDigit (gtin) {
+
+    // Check length of barcode for validity
+    if (!CheckGTIN(gtin))
+        return false;
+
+    // Define fixed variables 
     var CheckDigitArray = [];
     var gtinMaths = [3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3];
     var modifier = 17 - (gtin.length - 1); // Gets the position to place first digit in array
@@ -26,4 +32,21 @@ function CheckDigit (gtin) {
     // Check if last digit is same as calculated check digit
     if (gtin.slice(-1) == tmpCheckDigit)
         return true;
+}
+
+// Checks the validity of the input - is it
+// the right length (8, 12, 13, 14), and is
+// a numeric value
+function CheckGTIN (gtin) {
+    // Check length is ok
+    if (gtin.length != 8 && gtin.length != 12 && gtin.length != 13 && gtin.length != 14)
+        return false;
+    
+    // Check whether is a number
+    var m = gtin.match(/\d+/);
+    if (isNaN(m[0]))
+        return false;
+    
+    // Is valid, return true
+    return true;
 }
