@@ -8,15 +8,7 @@ import (
 
 /* Main Function Init Point */
 func main() {
-
-	// Define the GTIN
-	var gtin string = "5020379453454"
-
-	// Build the XML output
-	resp := CheckGTIN(gtin)
-
-	// Output XML
-	fmt.Println(resp)
+	fmt.Println(CheckGTIN("5020379345265"))
 }
 
 
