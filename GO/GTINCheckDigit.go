@@ -1,5 +1,4 @@
 // TOOD : Work in Progress
-
 package main
 
 import (
@@ -10,7 +9,6 @@ import (
 func main() {
 	fmt.Println(CheckGTIN("5020379345265"))
 }
-
 
 /* Builds the XML Feed for the USERS TABLE */
 func CheckGTIN(gtin string) bool {
