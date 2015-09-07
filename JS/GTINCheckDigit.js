@@ -1,8 +1,8 @@
 // Check length of barcode for validity
-function CheckDigit (gtin) {
+function CheckGTIN (gtin) {
 
     // Check length of barcode for validity
-    if (!CheckGTIN(gtin))
+    if (!CheckBasics(gtin))
         return false;
 
     // Define fixed variables 
@@ -37,7 +37,7 @@ function CheckDigit (gtin) {
 // Checks the validity of the input - is it
 // the right length (8, 12, 13, 14), and is
 // a numeric value
-function CheckGTIN (gtin) {
+function CheckBasics (gtin) {
     // Check length is ok
     if (gtin.length != 8 && gtin.length != 12 && gtin.length != 13 && gtin.length != 14)
         return false;
