@@ -3,11 +3,12 @@ package main
 import (
     "fmt"
     "regexp"
-    //"math"
+    "math"
+	"strconv"
 )
 
 func main() {
-    result := CheckGTIN("5012345264581")
+    result := CheckGTIN("5012345264583")
     fmt.Println(result)
 }
 
@@ -30,13 +31,14 @@ func CheckGTIN (gtin string) bool {
     for i, r := range gtin { BarcodeArray[i] = int(r) }
     
     // Temp Variables
-    var tmpCheckDigit int = 0
-    var tmpCheckSum int = 0
-    var tmpMath int = 0
+	var tmpCheckDigit float64 = 0.0
+	var tmpCheckSum int = 0
     
     // Run through and put digits into multiplication table
     for i := 0; i < (gtinLength - 1); i++ {
         CheckDigitArray[modifier + i] = BarcodeArray[i]  // Add barcode digits to Multiplication Table
+		
+		fmt.Println(BarcodeArray[i])  // It's pulling in digits into this array !!!!!!
     }
     
     // Calculate "Sum" of barcode digits
@@ -45,6 +47,13 @@ func CheckGTIN (gtin string) bool {
     }
     
     // TODO: Difference from Rounded-Up-To-Nearest-10 - Fianl Check Digit Calculation
+	tmpCheckDigit = (math.Ceil(float64(tmpCheckSum) / 10) * 10) - float64(tmpCheckSum)
+	
+	
+	if gtinCheckDigit == strconv.FormatFloat(tmpCheckDigit, 'f', -1, 64) {
+        return true
+	}
+	return false
 }
 
 
