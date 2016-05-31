@@ -12,8 +12,8 @@ class GTIN
 		
 		# Temporary variables
 		tmpCheckDigit = 0
-        tmpCheckSum = 0
-        tmpMath = 0
+		tmpCheckSum = 0
+		tmpMath = 0
 		
 		# TODO
 		
