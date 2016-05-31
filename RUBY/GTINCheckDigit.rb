@@ -14,13 +14,11 @@ class GTIN
     tmpCheckSum = 0
     tmpMath = 0
     
-    # TODO
+    # TODO: Implement differential
     
     return true
   end
-  
 end
-
 
 # Run function! 
 puts GTIN.check_gtin ('50203790052')
