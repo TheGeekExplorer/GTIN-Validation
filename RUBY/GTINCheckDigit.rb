@@ -1,6 +1,6 @@
+
 class GTIN
     
-    """ Perform a check on the GTIN for validity via the Check Digit """
     def self.check_gtin (gtin)
         
         # GTIN math preparations
@@ -22,7 +22,7 @@ class GTIN
         end
         
         # Calculate "Sum" of barcode digits
-        for i in modifier..14
+        for i in modifier..17
             tmp_check_sum = (tmp_check_sum.to_i + (check_digit_array[i].to_i * gtin_maths[i].to_i)) # Do math on consituents
         end
                 
@@ -37,6 +37,7 @@ class GTIN
         end
     end
 end
+
 
 # Run function! 
 puts GTIN.check_gtin ('502037900587')
