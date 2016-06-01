@@ -1,4 +1,3 @@
-
 class GTIN
     
     def self.check_gtin (gtin)
@@ -13,17 +12,16 @@ class GTIN
         # Temporary variables
         check_digit_array = {}
         tmp_check_digit = 0
-        tmp_check_sum = ""
-        tmp_math = 0
+        tmp_check_sum = 0
         
         # Run through and put digits into multiplication table
         for i in 0..(gtin_length - 2)
-            check_digit_array[modifier.to_i + i.to_i] = barcode_array[i.to_i];  # Add barcode digits to Multiplication Table
+            check_digit_array[modifier.to_i + i.to_i] = barcode_array[i.to_i]  # Add barcode digits to Multiplication Table
         end
         
         # Calculate "Sum" of barcode digits
         for i in modifier..17
-            tmp_check_sum = (tmp_check_sum.to_i + (check_digit_array[i].to_i * gtin_maths[i].to_i)) # Do math on consituents
+            tmp_check_sum = (tmp_check_sum.to_i + (check_digit_array[i].to_i * gtin_maths[i].to_i)).to_i  # Do math on consituents
         end
                 
         # Difference from Rounded-Up-To-Nearest-10 - Fianl Check Digit Calculation
@@ -38,6 +36,5 @@ class GTIN
     end
 end
 
-
-# Run function! 
-puts GTIN.check_gtin ('502037900587')
+# Run function!
+puts GTIN.check_gtin (my_gtin)
