@@ -12,7 +12,7 @@ Public Function validateBarcode(ByVal gtin)
     End If
     
     ''' SHOW IN DEBUG VALIDATION BEGINNING '''
-    Debug.Print "VALIDATING BARCODE CHECK DIGIT..."
+    Debug.Print "+ VALIDATING BARCODE CHECK DIGIT..."
     
     ''' Define the variables '''
     Dim checkDigitArray(1 To 17) As Integer
@@ -78,7 +78,7 @@ Public Function validateBarcode(ByVal gtin)
     
     ''' Round up to nearest 10, then take away the CheckSum to get the '''
     ''' calculated CheckDigit for provided barcode/gtin                '''
-    tmpCheckDigit = (Round((tmpCheckSum / 10) + 0.5) * 10) - tmpCheckSum
+    tmpCheckDigit = CInt(Round((tmpCheckSum / 10) + 0.5) * 10) - CInt(tmpCheckSum)
     
     
     ''' PRINT OUT VARIABLES TO DEBUG '''
@@ -88,7 +88,7 @@ Public Function validateBarcode(ByVal gtin)
     
     
     ''' Check if the calculated CheckDigit matches the CheckDigit in the Barcode '''
-    If gtinCheckDigit = tmpCheckDigit Then
+    If CInt(gtinCheckDigit) = CInt(tmpCheckDigit) Then
         Debug.Print "--> !!! VALID !!!"
         validateBarcode = True
     Else
@@ -119,5 +119,3 @@ Private Function splitStringIntoCharArray(ByVal Barcode)
     ' Return array of chars
     splitStringIntoCharArray = BarcodeArray
 End Function
-
-
