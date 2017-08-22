@@ -16,7 +16,8 @@ Public Function validateBarcode(ByVal gtin)
     
     ''' Define the variables '''
     Dim checkDigitArray(1 To 17) As Integer
-    Dim gtinMaths(1 To 17) As Integer
+    Dim gtinMaths() As String
+    ReDim gtinMaths(1 To 17) As String
     Dim modifier As Integer
     Dim gtinCheckDigitTMP(1 To 17) As Integer
     Dim gtinCheckDigit As Integer
@@ -29,23 +30,7 @@ Public Function validateBarcode(ByVal gtin)
     Dim i As Integer: i = 1
     
     ''' Build the gtinMaths object '''
-    gtinMaths(1) = 3
-    gtinMaths(2) = 1
-    gtinMaths(3) = 3
-    gtinMaths(4) = 1
-    gtinMaths(5) = 3
-    gtinMaths(6) = 1
-    gtinMaths(7) = 3
-    gtinMaths(8) = 1
-    gtinMaths(9) = 3
-    gtinMaths(10) = 1
-    gtinMaths(11) = 3
-    gtinMaths(12) = 1
-    gtinMaths(13) = 3
-    gtinMaths(14) = 1
-    gtinMaths(15) = 3
-    gtinMaths(16) = 1
-    gtinMaths(17) = 3
+    gtinMaths = splitStringIntoCharArray("31313131313131313")
     
     ''' The modifier '''
     modifier = 18 - Len(CStr(gtin))
@@ -73,8 +58,8 @@ Public Function validateBarcode(ByVal gtin)
     ''' Run through GTIN and put into offset array, so it's aligned on the '''
     ''' right hand side of the array limits (e.g. [-----50203790001]       '''
     Do While i < (Val(gtinLength))
-        checkDigitArray(Val(modifier) + Val(i)) = Val(BarcodeArray(Val(i))) '  // Add barcode digits to Multiplication Table
-        tmpOut = tmpOut + BarcodeArray(Val(i))
+        checkDigitArray(CInt(modifier) + CInt(i)) = CInt(BarcodeArray(Val(i))) '  // Add barcode digits to Multiplication Table
+        tmpOut = tmpOut + BarcodeArray(CInt(i))
         i = Val(i) + 1
     Loop
     tmpOut = tmpOut + "]"
@@ -86,7 +71,7 @@ Public Function validateBarcode(ByVal gtin)
     ''' the gtinMaths array to multiply digits (1, 3, 1, 3, 1, 3 etc)      '''
     i = modifier
     Do While i < 18
-        tmpCheckSum = Val(tmpCheckSum) + (checkDigitArray(i) * gtinMaths(i))
+        tmpCheckSum = CInt(tmpCheckSum) + (CInt(checkDigitArray(i)) * CInt(gtinMaths(i)))
         i = Val(i) + 1
     Loop
     
@@ -104,7 +89,7 @@ Public Function validateBarcode(ByVal gtin)
     
     ''' Check if the calculated CheckDigit matches the CheckDigit in the Barcode '''
     If gtinCheckDigit = tmpCheckDigit Then
-    Debug.Print "--> !!! VALID !!!"
+        Debug.Print "--> !!! VALID !!!"
         validateBarcode = True
     Else
         Debug.Print "--> !!! INVALID !!!"
@@ -134,3 +119,5 @@ Private Function splitStringIntoCharArray(ByVal Barcode)
     ' Return array of chars
     splitStringIntoCharArray = BarcodeArray
 End Function
+
+
