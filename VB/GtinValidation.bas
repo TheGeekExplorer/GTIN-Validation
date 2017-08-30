@@ -1,7 +1,7 @@
 ''' validateBarcode
-''' Validates the CheckDigit on the provided GTIN Barcode; if it
-''' is the same as the calculated check digit then the barcode is
-''' valid, and the method will return a TRUE, else FALSE.
+''' Validates the CheckDigit on the provided GTIN Barcode; if it is the same as the 
+''' calculated check digit then the barcode is valid, and the method will return a 
+''' TRUE, else FALSE.
 ''' @param string gtin
 ''' @return boolean
 Public Function validateBarcode(ByVal gtin)
@@ -10,9 +10,6 @@ Public Function validateBarcode(ByVal gtin)
     If CStr(gtin) = "" Or Len(CStr(gtin)) > 17 Then
         GoTo ENDING
     End If
-    
-    ''' SHOW IN DEBUG VALIDATION BEGINNING '''
-    debug.print "+ VALIDATING BARCODE CHECK DIGIT..."
     
     ''' Define the variables '''
     Dim checkDigitArray(1 To 17) As Integer
@@ -64,7 +61,6 @@ Public Function validateBarcode(ByVal gtin)
     debug.print tmpOut + "]"
     i = 1
     
-    
     ''' Calculate the CheckSum of the combined digits in the barcode using '''
     ''' the gtinMaths array to multiply digits (1, 3, 1, 3, 1, 3 etc)      '''
     i = modifier
@@ -73,17 +69,14 @@ Public Function validateBarcode(ByVal gtin)
         i = Val(i) + 1
     Loop
     
-    
     ''' Round up to nearest 10, then take away the CheckSum to get the '''
     ''' calculated CheckDigit for provided barcode/gtin                '''
     tmpCheckDigit = CInt(Round((tmpCheckSum / 10) + 0.5) * 10) - CInt(tmpCheckSum)
-    
     
     ''' PRINT OUT VARIABLES TO DEBUG '''
     debug.print  "--> Checksum: " + CStr(tmpCheckSum)
     debug.print  "--> Check Digit: " + CStr(gtinCheckDigit)
     debug.print  "--> Calculated Digit: " + CStr(tmpCheckDigit)
-    
     
     ''' Check if the calculated CheckDigit matches the CheckDigit in the Barcode '''
     If CInt(gtinCheckDigit) = CInt(tmpCheckDigit) Then
@@ -93,7 +86,6 @@ Public Function validateBarcode(ByVal gtin)
         debug.print  "--> !!! INVALID !!!"
         validateBarcode = False
     End If
-    
     
 ENDING:
 End Function
