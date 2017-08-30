@@ -1,9 +1,14 @@
-<?php
-namespace gtin;
+<?php namespace gtin;
 
 class GTIN {
 
-    # Check length of barcode for validity
+    /* Check length of barcode for validity via the checkdigit calculation
+     * We split the barcode into it's constituent digits, offset them into the GTIN
+     * calculation tuple (x1, x3, x1, x3, x1, etc, etc), multiply the digits and add
+     * them together, then modulo them on 10, and you get the calculated check digit.
+     * For more information see GS1 website: https://www.gs1.org/check-digit-calculator
+     * @param string gtin
+     * @return bool */
     public static function CheckGTIN ($gtin) {
     
         # Check that GTIN provided is a certain length
@@ -40,7 +45,9 @@ class GTIN {
         return false;
     }
     
-    # Checks the length of the GTIN
+    /* Checks the length of the GTIN
+     * @param string gtin
+     * @return bool */
     public static function CheckBasics ($gtin) {
         # Check length is ok
         if (strlen($gtin) < 8 || strlen($gtin) > 14)
@@ -55,3 +62,4 @@ class GTIN {
         return true;
     }
 }
+
