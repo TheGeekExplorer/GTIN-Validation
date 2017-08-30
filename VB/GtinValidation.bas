@@ -12,7 +12,7 @@ Public Function validateBarcode(ByVal gtin)
     End If
     
     ''' SHOW IN DEBUG VALIDATION BEGINNING '''
-    CoreUtils.WriteToLog "+ VALIDATING BARCODE CHECK DIGIT..."
+    debug.print "+ VALIDATING BARCODE CHECK DIGIT..."
     
     ''' Define the variables '''
     Dim checkDigitArray(1 To 17) As Integer
@@ -48,7 +48,6 @@ Public Function validateBarcode(ByVal gtin)
     ''' e.g. [----5020379004332] or [--------502888344]                      '''
     Dim tmpOut As String
     tmpOut = "--> MODIFIER ARRAY: ["
-    
     Do While i < (modifier + 1)
         tmpOut = tmpOut + "-"
         i = Val(i) + 1
@@ -62,7 +61,7 @@ Public Function validateBarcode(ByVal gtin)
         tmpOut = tmpOut + BarcodeArray(CInt(i))
         i = Val(i) + 1
     Loop
-    CoreUtils.WriteToLog tmpOut + "]"
+    debug.print tmpOut + "]"
     i = 1
     
     
@@ -81,17 +80,17 @@ Public Function validateBarcode(ByVal gtin)
     
     
     ''' PRINT OUT VARIABLES TO DEBUG '''
-    CoreUtils.WriteToLog "--> Checksum: " + CStr(tmpCheckSum)
-    CoreUtils.WriteToLog "--> Check Digit: " + CStr(gtinCheckDigit)
-    CoreUtils.WriteToLog "--> Calculated Digit: " + CStr(tmpCheckDigit)
+    debug.print  "--> Checksum: " + CStr(tmpCheckSum)
+    debug.print  "--> Check Digit: " + CStr(gtinCheckDigit)
+    debug.print  "--> Calculated Digit: " + CStr(tmpCheckDigit)
     
     
     ''' Check if the calculated CheckDigit matches the CheckDigit in the Barcode '''
     If CInt(gtinCheckDigit) = CInt(tmpCheckDigit) Then
-        CoreUtils.WriteToLog "--> !!! VALID !!!"
+        debug.print  "--> !!! VALID !!!"
         validateBarcode = True
     Else
-        CoreUtils.WriteToLog "--> !!! INVALID !!!"
+        debug.print  "--> !!! INVALID !!!"
         validateBarcode = False
     End If
     
