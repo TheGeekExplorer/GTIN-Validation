@@ -1,7 +1,6 @@
 ''' validateBarcode
-''' Validates the CheckDigit on the provided GTIN Barcode; if it
-''' is the same as the calculated check digit then the barcode is
-''' valid, and the method will return a TRUE, else FALSE.
+''' Validates the CheckDigit on the provided GTIN Barcode; if it is the same as
+''' the calculated check digit then the barcode is valid, and returns TRUE/FALSE.
 ''' @param string gtin
 ''' @return boolean
 Public Function validateBarcode(ByVal gtin)
@@ -31,20 +30,20 @@ Public Function validateBarcode(ByVal gtin)
     ''' Get the last digit (Check Digit) '''
     gtinCheckDigit = BarcodeArray(Len(gtin))
     
-    ''' Get gtinLength '''
-    gtinLength = Len(gtin)
-        
     ''' Run through the barcode chars, and assign them to the modifier array '''
     ''' e.g. [----5020379004332] or [--------502888344]                      '''
     tmpOut = "--> MODIFIER ARRAY: ["
     Do While i < (modifier + 1): tmpOut = tmpOut + "-": i = Val(i) + 1: Loop: i = 1
     
-    ''' Run through GTIN and put into offset array, so it's aligned on the '''
-    ''' right hand side of the array limits (e.g. [-----50203790001]       '''
-    Do While i < (Val(gtinLength))
-        checkDigitArray(CInt(modifier) + CInt(i)) = CInt(BarcodeArray(Val(i))) '  // Add barcode digits to Multiplication Table
-        tmpOut = tmpOut + BarcodeArray(CInt(i)): i = Val(i) + 1
-    Loop: CoreUtils.WriteToLog tmpOut + "]": i = 1
+        ''' Run through GTIN and put into offset array, so it's aligned on the '''
+        ''' right hand side of the array limits (e.g. [-----50203790001]       '''
+        Do While i < (Val(Len(CStr(gtin))))
+            checkDigitArray(CInt(modifier) + CInt(i)) = CInt(BarcodeArray(Val(i))) '  // Add barcode digits to Multiplication Table
+            tmpOut = tmpOut + BarcodeArray(CInt(i)): i = Val(i) + 1
+        Loop:
+    
+    ''' End debug array string
+    CoreUtils.WriteToLog tmpOut + "]": i = 1
     
     ''' Calculate the CheckSum of the combined digits in the barcode using '''
     ''' the gtinMaths array to multiply digits (1, 3, 1, 3, 1, 3 etc)      '''
@@ -67,7 +66,7 @@ Public Function validateBarcode(ByVal gtin)
         CoreUtils.WriteToLog "--> !!! INVALID !!!"
         validateBarcode = False
     End If
-
+    
 ENDING:
 End Function
 
@@ -90,16 +89,17 @@ End Function
 ''' calculateCheckSum
 ''' Takes all of the digits in the array and calculated the CheckSum
 ''' @param array checkDigitArray
-''' @param string gtinMaths
+''' @param array gtinMaths
+''' @param integer modifier
 ''' @return integer checksum
 Private Function calculateCheckSum(ByVal checkDigitArray, ByVal gtinMaths, ByVal modifier)
     Dim tmpCheckSum As Integer: tmpCheckSum = 0
     Dim i As Integer: i = modifier
+    
     ' Do calculation
     Do While i < 18
         tmpCheckSum = CInt(tmpCheckSum) + (CInt(checkDigitArray(i)) * CInt(gtinMaths(i)))
         i = Val(i) + 1
     Loop
-    ' Return checksum
     calculateCheckSum = tmpCheckSum
 End Function
