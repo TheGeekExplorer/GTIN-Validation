@@ -9,7 +9,7 @@ Public Function validateBarcode(ByVal gtin)
     End If
     
     ''' SHOW IN DEBUG VALIDATION BEGINNING '''
-    CoreUtils.WriteToLog "+ VALIDATING BARCODE CHECK DIGIT..."
+    Debug.print "+ VALIDATING BARCODE CHECK DIGIT..."
     
     ''' Define the variables '''
     Dim gtinMaths() As String: ReDim gtinMaths(1 To 17) As String
@@ -43,7 +43,7 @@ Public Function validateBarcode(ByVal gtin)
         Loop:
     
     ''' End debug array string
-    CoreUtils.WriteToLog tmpOut + "]": i = 1
+    Debug.print tmpOut + "]": i = 1
     
     ''' Calculate the CheckSum of the combined digits in the barcode using '''
     ''' the gtinMaths array to multiply digits (1, 3, 1, 3, 1, 3 etc)      '''
@@ -54,16 +54,16 @@ Public Function validateBarcode(ByVal gtin)
     tmpCheckDigit = CInt(Round((tmpCheckSum / 10) + 0.5) * 10) - CInt(tmpCheckSum)
     
     ''' PRINT OUT VARIABLES TO DEBUG '''
-    CoreUtils.WriteToLog "--> Checksum: " + CStr(tmpCheckSum)
-    CoreUtils.WriteToLog "--> Check Digit: " + CStr(gtinCheckDigit)
-    CoreUtils.WriteToLog "--> Calculated Digit: " + CStr(tmpCheckDigit)
+    Debug.print "--> Checksum: " + CStr(tmpCheckSum)
+    Debug.print "--> Check Digit: " + CStr(gtinCheckDigit)
+    Debug.print "--> Calculated Digit: " + CStr(tmpCheckDigit)
     
     ''' Check if the calculated CheckDigit matches the CheckDigit in the Barcode '''
     If CInt(gtinCheckDigit) = CInt(tmpCheckDigit) Then
-        CoreUtils.WriteToLog "--> !!! VALID !!!"
+        Debug.print "--> !!! VALID !!!"
         validateBarcode = True
     Else
-        CoreUtils.WriteToLog "--> !!! INVALID !!!"
+        Debug.print "--> !!! INVALID !!!"
         validateBarcode = False
     End If
     
