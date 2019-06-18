@@ -9,7 +9,7 @@ class GTIN {
      * For more information see GS1 website: https://www.gs1.org/check-digit-calculator
      * @param string gtin
      * @return bool */
-    public static function CheckGTIN ($gtin) {
+    public static function CheckGTIN (string $gtin) : bool {
     
         # Check that GTIN provided is a certain length
         if (!CheckBasics($gtin))
@@ -37,7 +37,7 @@ class GTIN {
         }
         
         # Difference from Rounded-Up-To-Nearest-10 - Fianl Check Digit Calculation
-        $tmpCheckDigit = (ceil($tmpCheckSum / 10) * 10) - $tmpCheckSum;
+        $tmpCheckDigit = (int)(ceil($tmpCheckSum / 10) * 10) - $tmpCheckSum;
         
         # Check if last digit is same as calculated check digit
         if ($gtinCheckDigit == $tmpCheckDigit)
@@ -48,7 +48,7 @@ class GTIN {
     /* Checks the length of the GTIN
      * @param string gtin
      * @return bool */
-    public static function CheckBasics ($gtin) {
+    public static function CheckBasics (string $gtin) : bool {
         # Check length is ok
         if (strlen($gtin) < 8 || strlen($gtin) > 14)
             return false;
