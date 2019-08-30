@@ -4,13 +4,13 @@
 
 This function checks the validity of GTIN-8, GTIN-12, GTIN-13, and GTIN-14 using the check digit.
 
-A number of classes/functions have been written in different languages, such as Javascript, PHP, Ruby, TSQL, and VB6/VBA - the supported list :-
+A number of classes/functions have been written in different languages, such as Java, PHP, Ruby, Javascript, TSQL, and VB6/VBA - the supported list :-
 
 ### Languages Supported
 
-    Javascript, PHP, Ruby, TSQL, and VB (VB6/VBA).
+    Java, PHP, Ruby, TSQL, Javascript, and VB (VB6/VBA).
 
 ##### Partial Implementation
 
-    GO,TSQL
+    GO
 
