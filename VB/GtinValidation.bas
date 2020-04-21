@@ -8,9 +8,6 @@ Public Function validateBarcode(ByVal gtin)
         GoTo ENDING
     End If
     
-    ' SHOW IN DEBUG VALIDATION BEGINNING '''
-    Debug.print "+ VALIDATING BARCODE CHECK DIGIT..."
-    
     ' Define the variables '''
     Dim gtinMaths() As String: ReDim gtinMaths(1 To 17) As String
     Dim checkDigitArray(1 To 17), gtinCheckDigitTMP(1 To 17), gtinCheckDigit, gtinLength, tmpCheckDigit, tmpCheckSum, tmpMath, modifier, i As Integer
@@ -32,8 +29,7 @@ Public Function validateBarcode(ByVal gtin)
     
     ' Run through the barcode chars, and assign them to the modifier array
     ' e.g. [----5020379004332] or [--------502888344]
-    tmpOut = "--> MODIFIER ARRAY: ["
-    Do While i < (modifier + 1): tmpOut = tmpOut + "-": i = Val(i) + 1: Loop: i = 1
+    Do While i < (modifier + 1): i = Val(i) + 1: Loop: i = 1
     
         ' Run through GTIN and put into offset array, so it's aligned on the
         ' right hand side of the array limits (e.g. [-----50203790001]
@@ -53,17 +49,10 @@ Public Function validateBarcode(ByVal gtin)
     ' calculated CheckDigit for provided barcode/gtin
     tmpCheckDigit = CInt(Round((tmpCheckSum / 10) + 0.5) * 10) - CInt(tmpCheckSum)
     
-    ''' PRINT OUT VARIABLES TO DEBUG '''
-    Debug.print "--> Checksum: " + CStr(tmpCheckSum)
-    Debug.print "--> Check Digit: " + CStr(gtinCheckDigit)
-    Debug.print "--> Calculated Digit: " + CStr(tmpCheckDigit)
-    
     ' Check if the calculated CheckDigit matches the CheckDigit in the Barcode
     If CInt(gtinCheckDigit) = CInt(tmpCheckDigit) Then
-        Debug.print "--> !!! VALID !!!"
         validateBarcode = True
     Else
-        Debug.print "--> !!! INVALID !!!"
         validateBarcode = False
     End If
     
