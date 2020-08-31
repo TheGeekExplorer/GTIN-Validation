@@ -34,11 +34,8 @@ func checkGTIN(_ gtin: String) -> Bool {
     // iterate over rest of array "back to front"
     gtinDigitsArray = gtinDigitsArray.reversed()
 
-    var checkSum = 0
-    for (index, value) in gtinDigitsArray.enumerated() {
-        let multiplier = multipliers[index]
-        checkSum += multiplier * value
-    }
+    let checkSum = zip(multipliers, gtinDigits).map(*).reduce(0, +)
+
     // need to compare last digit to (checkSum subtracted from next highest muliple of 10)
     let checkSumDigit = 10 - checkSum % 10
 
