@@ -8,7 +8,7 @@ A number of classes/functions have been written in different languages, such as 
 
 ### Languages Supported
 
-    Java, PHP, Ruby, TSQL, Javascript, Swift 5, and VB (VB6/VBA).
+    Java, PHP, Ruby, TSQL, Javascript, Swift 5, and VBA/VB6.
 
 ##### Partial Implementation
 
